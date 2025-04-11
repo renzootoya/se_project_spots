@@ -22,6 +22,6 @@ This project is made so all the elements are displayed correctly on popular scre
 
 **Deployment**
 
-- [deplyment link][def]
+- [deployment link][def]
 
 [def]: https://renzootoya.github.io/se_project_spots/
