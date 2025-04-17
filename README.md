@@ -25,3 +25,5 @@ This project is made so all the elements are displayed correctly on popular scre
 - [deployment link][def]
 
 [def]: https://renzootoya.github.io/se_project_spots/
+
+- [video] [https://drive.google.com/file/d/1PthZ5PX2nLyGyUokjWK2JgMtVzS05idL/view?usp=sharing]
