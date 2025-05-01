@@ -28,7 +28,7 @@
   white-space: nowrap;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line: 3;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   color: rgba(33, 33, 33, 1);
 }
@@ -43,10 +43,11 @@
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line: 3;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   white-space: nowrap;
   max-width: 420px;
+  color: rgba(33, 33, 33, 0.7);
 }
 
 .profile__edit-btn {
@@ -60,6 +61,12 @@
   padding: 0;
 }
 
+.profile__edit-btn:hover {
+  opacity: 100%;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
 .profile__add-btn {
   display: flex;
   margin-left: auto;
@@ -69,6 +76,12 @@
   gap: 8px;
   border-radius: 8px;
   padding: 18px 32px;
+}
+
+.profile__add-btn:hover {
+  background: #424242;
+  transform: scale(1.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @media screen and (max-width: 627px) {
