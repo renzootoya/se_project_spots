@@ -9,7 +9,6 @@
   letter-spacing: 0%;
   background: rgba(33, 33, 33, 1) transparent;
   max-width: 119;
-  margin: 0 0 8px;
 }
 
 .card__image {
@@ -31,13 +30,14 @@
 }
 
 .card__like-btn {
-  background-image: url(../images/heart.svg);
+  background-image: url(../images/likeicon2.png);
   width: 23px;
   height: 20px;
   background-color: transparent;
-  border: none rgba(33, 33, 33, 1);
+  border: none;
   cursor: pointer;
   padding: 0;
+  opacity: 40%;
 }
 
 .card__like-btn:hover {
@@ -56,7 +56,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 527px) {
+@media screen and (max-width: 627px) {
   .card__image {
     height: 280px;
   }

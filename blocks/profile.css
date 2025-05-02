@@ -63,7 +63,6 @@
 
 .profile__edit-btn:hover {
   opacity: 100%;
-  text-decoration: underline;
   transition: opacity 0.2s ease;
 }
 
@@ -75,7 +74,7 @@
   color: rgba(252, 245, 229, 1);
   gap: 8px;
   border-radius: 8px;
-  padding: 18px 32px;
+  padding: 18px 18px;
 }
 
 .profile__add-btn:hover {
@@ -111,7 +110,6 @@
     margin: 0 0 32px;
     max-width: 288px;
     -webkit-box-orient: vertical;
-    background: rgba(33, 33, 33, 0.7);
   }
   .profile__add-btn {
     margin: 0;
