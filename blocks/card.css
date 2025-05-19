@@ -8,7 +8,8 @@
   line-height: 120%;
   letter-spacing: 0%;
   background: rgba(33, 33, 33, 1) transparent;
-  max-width: 119;
+  max-width: 350px;
+  margin: 0;
 }
 
 .card__image {
@@ -23,14 +24,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  margin-top: 12px;
 }
 
 .card__like-btn {
-  background-image: url(../images/likeicon2.png);
+  background-image: url(../images/Union.svg);
   width: 23px;
   height: 20px;
   background-color: transparent;
@@ -38,6 +36,9 @@
   cursor: pointer;
   padding: 0;
   opacity: 40%;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .card__like-btn:hover {
@@ -45,25 +46,18 @@
   transition: opacity 0.3s ease;
 }
 
-.profile__add-btn:hover {
-  background: #424242;
-  transform: scale(1.02);
-  cursor: pointer;
-}
-
-.profile__edit-btn:hover {
-  opacity: 1;
-  cursor: pointer;
-}
-
 @media screen and (max-width: 627px) {
+  .card__title {
+    max-width: 250px;
+    font-size: 16px;
+  }
+
   .card__image {
     height: 280px;
   }
 
   .card__like-btn {
-    width: 20;
-    height: 18;
-    border-width: 2px;
+    width: 20px;
+    height: 18px;
   }
 }
