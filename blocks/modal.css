@@ -104,7 +104,7 @@
 
 @media screen and (max-width: 627px) {
   .modal {
-    fonts: ;
+    fonts: "Poppins", Arial, Helvetica, sans-serif;
     width: 300;
     height: 336;
     top: 134px;
