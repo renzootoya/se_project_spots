@@ -112,7 +112,7 @@
       <div class="modal modal_is-opened">
         <div class="modal__container">
           <button type="submit" class="modal__close-btn">
-            <img src="./images/Group 27.svg" alt="Close Botton Icon" />
+            <img src="./images/closebottomicon.svg" alt="Close Botton Icon" />
           </button>
           <h2 class="modal__tittle">Edit profile</h2>
           <form class="modal__form">
@@ -132,6 +132,35 @@
                 type="text"
                 class="modal__input"
                 placeholder="Describe yourself"
+              />
+            </label>
+            <button type="submit" class="modal__submit-btn">Save</button>
+          </form>
+        </div>
+      </div>
+      <div class="modal modal_is-opened">
+        <div class="modal__container">
+          <button type="submit" class="modal__close-btn">
+            <img src="./images/closebottomicon.svg" alt="Close Botton Icon" />
+          </button>
+          <h2 class="modal__tittle">New Post</h2>
+          <form class="modal__form">
+            <label for="profile-name-input" class="modal__label">
+              Image link
+              <input
+                id="profile-name-input"
+                type="text"
+                class="modal__input"
+                placeholder="Paste a link to the picture"
+              />
+            </label>
+            <label for="profile-description-input" class="modal__label"
+              >Caption
+              <input
+                id="profile-description-input"
+                type="url"
+                class="modal__input"
+                placeholder="Type your caption"
               />
             </label>
             <button type="submit" class="modal__submit-btn">Save</button>
