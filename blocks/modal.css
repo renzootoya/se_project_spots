@@ -1,5 +1,4 @@
 .modal {
-  /*TODO - add corrects fonts, fonts for responsive design,pixels value,bottom stretch all thte way , remove max witdh -*/
   display: flex;
   visibility: hidden;
   background-color: #00000080;
@@ -31,7 +30,6 @@
 }
 
 .modal__close-btn {
-  /*add close icon */
   position: absolute;
   top: 32px;
   right: 50px;
