@@ -67,7 +67,6 @@
   border-radius: 8px;
   border: 1px solid #21212166;
   gap: 10px;
-  /* add border padding radios*/
 }
 
 .modal__input::placeholder {
@@ -96,8 +95,6 @@
   width: 156px;
   height: 52px;
   border-radius: 8px;
-
-  /*removee max  width in media queries*/
 }
 
 @media screen and (max-width: 627px) {
