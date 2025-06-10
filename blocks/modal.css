@@ -14,15 +14,16 @@
   max-width: none;
   padding: 18px 32px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: visibility 0s linear 0.3s, opacity 0.3s ease;
-  z-index: 1000;
+  opacity: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
 }
 
 .modal_is-opened {
   visibility: visible;
   opacity: 1;
-  transition: visibility 0s linear 0s, opacity 0.3s ease;
+  transition-delay: 0s;
 }
+
 .modal__container {
   background-color: white;
   padding: 20px;
@@ -59,6 +60,10 @@
   height: 40px;
   opacity: 0.4;
   padding: 0;
+}
+
+.modal__close-btn:hover {
+  cursor: pointer;
 }
 
 .modal__tittle {
@@ -113,6 +118,10 @@
   width: 156px;
   height: 52px;
   border-radius: 8px;
+}
+
+.modal__submit-btn:hover {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 627px) {
