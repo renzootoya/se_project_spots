@@ -14,10 +14,28 @@
   max-width: none;
   padding: 18px 32px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: visibility 0s linear 0.3s, opacity 0.3s ease;
+  z-index: 1000;
 }
 
 .modal_is-opened {
   visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 0s, opacity 0.3s ease;
+}
+.modal__container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 80%;
+  max-height: 80vh;
+  overflow-y: auto;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.modal_opened .modal__container {
+  transform: scale(1);
 }
 
 .modal__container {
