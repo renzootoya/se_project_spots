@@ -15,6 +15,9 @@ const newPostCloseBtn = newPostmodal.querySelector(".modal__close-btn");
 const newPostForm = newPostmodal.querySelector(".modal__form--new-post");
 const profileNameEl = document.querySelector(".profile__name");
 const profileDescriptionEl = document.querySelector(".profile__description");
+const imageInput = document.querySelector("#post-image-input");
+const captionInput = document.querySelector("#post-caption-input");
+const cardsList = document.querySelector(".cards__list");
 
 editProfileBtn.addEventListener("click", function () {
   editProfileNameInput.value = profileNameEl.textContent;
@@ -35,13 +38,9 @@ function handleEditProfileSubmit(evt) {
 
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
-const imageInput = document.querySelector("#post-image-input");
-const captionInput = document.querySelector("#post-caption-input");
-const cardsList = document.querySelector(".cards__list");
-
 newPostBtn.addEventListener("click", function () {
-  cardImage.src = imageInput.value;
-  cardTitle.textContent = captionInput.value;
+  imageInput.value = "";
+  captionInput.value = "";
   newPostmodal.classList.add("modal_is-opened");
 });
 
@@ -57,22 +56,22 @@ cardElement.classList.add("card");
 const cardImage = document.createElement("img");
 cardImage.classList.add("card__image");
 
-const cardContent = document.createElement("div");
-cardContent.classList.add("card__content");
-
-const cardTitle = document.createElement("h2");
-cardTitle.classList.add("card__title");
-const cardLikeButton = document.createElement("button");
-cardLikeButton.classList.add("card__like-btn");
-
-cardElement.appendChild(cardImage);
-cardElement.appendChild(cardContent);
-cardContent.appendChild(cardTitle);
-cardContent.appendChild(cardLikeButton);
-cardsList.appendChild(cardElement);
-
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
+  const cardContent = document.createElement("div");
+  cardContent.classList.add("card__content");
+
+  const cardTitle = document.createElement("h2");
+  cardTitle.classList.add("card__title");
+  const cardLikeButton = document.createElement("button");
+  cardLikeButton.classList.add("card__like-btn");
+
+  cardElement.appendChild(cardImage);
+  cardElement.appendChild(cardContent);
+  cardContent.appendChild(cardTitle);
+  cardContent.appendChild(cardLikeButton);
+  cardsList.appendChild(cardElement);
+
   cardImage.src = imageInput.value;
   cardTitle.textContent = captionInput.value;
   newPostmodal.classList.remove("modal_is-opened");
