@@ -37,7 +37,7 @@
   width: 100%;
   border-radius: 8px;
   background-color: #fff;
-  padding: 32px 50px;
+  padding: 32px 80px 32px 50px;
   position: relative;
 }
 
@@ -48,7 +48,7 @@
 .modal__close-btn {
   position: absolute;
   top: 32px;
-  right: 50px;
+  right: 40px;
   width: 40px;
   height: 40px;
   border: none;
@@ -57,6 +57,7 @@
   height: 40px;
   opacity: 0.4;
   padding: 0;
+  right: 18px;
 }
 
 .modal__close-btn:hover {
@@ -81,12 +82,11 @@
 .modal__input {
   display: block;
   margin: 8px 0 0;
-  width: 630px;
-  height: 52px;
+  width: 730px;
+  height: 74px;
   border-radius: 8px;
   border: 1px solid #21212166;
   gap: 10px;
-  padding: 16px 12px;
 }
 
 .modal__input::placeholder {
@@ -155,57 +155,54 @@
     max-width: 300px;
     max-height: 336px;
     width: 100%;
+    max-height: 800px;
   }
+}
 
-  .modal__form {
-    width: 276px;
-    height: 248px;
-  }
+.modal__form {
+  width: 276px;
+}
 
-  .modal__tittle {
-    width: 276px;
-    height: 40px;
-    margin: 0;
-    font-weight: 500;
-    font-size: 32px;
-    line-height: 100%;
-    letter-spacing: 0%;
-  }
+.modal__tittle {
+  width: 276px;
+  height: 40px;
+  margin: 0;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
 
-  .modal__input {
-    display: block;
-    width: 276px;
-    height: 74px;
-    gap: 8px;
-    padding: 16px 12px;
-    border-radius: 8px;
-    border: 1px solid #21212166;
-  }
+.modal__input {
+  display: block;
+  gap: 8px;
+  padding: 16px 12px;
+  border-radius: 8px;
+  border: 1px solid #21212166;
+}
 
-  .modal__close-btn {
-    position: absolute;
-    top: 32px;
-    right: 50px;
-    width: 40px;
-    height: 40px;
-    border: none;
-    background-color: #fff;
-    width: 40px;
-    height: 40px;
-    opacity: 0.4;
-    padding: 0;
-  }
+.modal__close-btn {
+  position: absolute;
+  top: auto;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: #fff;
+  width: 40px;
+  height: 40px;
+  opacity: 0.4;
+  padding: 0;
+}
 
-  .modal__submit-btn {
-    width: 276px;
-    height: 52px;
-    gap: 8px;
-    display: flex;
-    justify-content: center;
-    border-radius: 8px;
-    padding-top: 18px;
-    padding-right: 32px;
-    padding-bottom: 18px;
-    padding-left: 32px;
-  }
+.modal__submit-btn {
+  width: 276px;
+  height: 52px;
+  gap: 8px;
+  display: flex;
+  justify-content: center;
+  border-radius: 8px;
+  padding-top: 18px;
+  padding-right: 32px;
+  padding-bottom: 18px;
+  padding-left: 32px;
 }
