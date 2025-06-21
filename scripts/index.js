@@ -58,8 +58,9 @@ cardImage.classList.add("card__image");
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-  const cardContent = document.createElement("div");
-  cardContent.classList.add("card__content");
+  console.log(captionInput.value);
+  console.log(imageInput.value);
+  newPostmodal.classList.remove("modal_is-opened");
 
   const cardTitle = document.createElement("h2");
   cardTitle.classList.add("card__title");
