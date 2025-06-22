@@ -61,19 +61,4 @@ function handleNewPostSubmit(evt) {
   console.log(captionInput.value);
   console.log(imageInput.value);
   newPostmodal.classList.remove("modal_is-opened");
-
-  const cardTitle = document.createElement("h2");
-  cardTitle.classList.add("card__title");
-  const cardLikeButton = document.createElement("button");
-  cardLikeButton.classList.add("card__like-btn");
-
-  cardElement.appendChild(cardImage);
-  cardElement.appendChild(cardContent);
-  cardContent.appendChild(cardTitle);
-  cardContent.appendChild(cardLikeButton);
-  cardsList.appendChild(cardElement);
-
-  cardImage.src = imageInput.value;
-  cardTitle.textContent = captionInput.value;
-  newPostmodal.classList.remove("modal_is-opened");
 }

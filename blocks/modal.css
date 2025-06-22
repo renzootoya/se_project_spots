@@ -118,6 +118,7 @@
   border-radius: 8px;
   width: 100%;
   border: none;
+  max-width: 156px;
 }
 
 .modal__submit-btn:hover {
@@ -198,5 +199,7 @@
     padding-right: 32px;
     padding-bottom: 18px;
     padding-left: 32px;
+    width: 100%;
+    max-width: 100%;
   }
 }
