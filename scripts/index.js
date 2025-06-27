@@ -62,3 +62,5 @@ function handleNewPostSubmit(evt) {
   console.log(imageInput.value);
   newPostmodal.classList.remove("modal_is-opened");
 }
+
+newPostForm.addEventListener("submit", handleNewPostSubmit);
