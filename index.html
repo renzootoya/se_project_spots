@@ -37,6 +37,7 @@
           <ul class="cards__list">
             <template id="card-template">
               <li class="card">
+                <button class="card__delete-button" type="button"></button>
                 <img src="#" alt="" class="card__image" />
                 <div class="card__footer">
                   <h2 class="card__title"></h2>
@@ -108,6 +109,19 @@
             <button type="submit" class="modal__submit-btn">Save</button>
           </form>
         </div>
+      </div>
+    </div>
+
+    <div class="modal modal__close-btn_type_preview" id="preview-modal">
+      <div class="modal__image-container">
+        <button
+          aria-label="Close modal"
+          class="modal__close-btn modal__close-btn_type_preview"
+          type="button"
+          src="../se_project_spots/images/Delete-icon-preview.svg"
+        ></button>
+        <img src="#" class="modal__image" />
+        <p class="modal__caption"></p>
       </div>
     </div>
     <script src="./scripts/index.js"></script>

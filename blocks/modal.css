@@ -11,11 +11,13 @@
   justify-content: center;
   align-items: center;
   border-radius: 8px;
-  width: 100%;
-  max-width: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   opacity: 0;
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+  padding: 0 10px;
+}
+
+.modal__close-btn_type_preview {
+  padding: 0 16px;
 }
 
 .modal_is-opened {
@@ -33,9 +35,9 @@
   transition: transform 0.3s ease;
   max-width: 730px;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: #fff;
-  padding: 0px 50px 32px;
+  padding: 36px 50px 32px;
   position: relative;
   box-sizing: border-box;
 }
@@ -49,15 +51,31 @@
   margin-top: 32px;
   width: 40px;
   height: 40px;
+  background-image: url(../images/close-btn-default.svg) no-repeat;
+  color: #fff;
+  background-size: 35px 35px;
+  background: none;
   border: none;
-  background-color: #fff;
-  opacity: 40%;
+  top: 32px;
   right: 50px;
+  transition: 0.3s;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.modal__close-btn_type_preview {
+  background-image: url(../images/close-btn-default.svg);
+  background-repeat: no-repeat;
+  color: #fff;
+  top: 0;
+  right: -52.5px;
 }
 
 .modal__close-btn:hover {
   cursor: pointer;
   opacity: 40%;
+  background-image: url(../images/close-btn-hover.svg);
 }
 
 .modal__title {
@@ -125,7 +143,33 @@
   opacity: 40%;
 }
 
-@media screen and (max-width: 627px) {
+.modal__image-container {
+  position: relative;
+}
+
+.modal__image {
+  max-width: 80vw;
+  max-height: 80vh;
+  width: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 8px;
+}
+
+.modal__caption {
+  max-width: fit-content;
+  color: #fff;
+  background-color: #212121;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 20px;
+  line-height: 120%;
+  letter-spacing: 0%;
+}
+
+@media screen and (max-width: 480px) {
   .modal {
     width: 100%;
     gap: 24px;
@@ -139,27 +183,15 @@
   }
 
   .modal__container {
-    gap: 24px;
-    border-radius: 8px;
-    padding: 12px;
-    max-width: 330px;
-    width: 100%;
-    max-height: 800px;
+    padding: 22px 12px 12px;
   }
 
   .modal__form {
-    width: 300px;
+    margin-top: 34px;
   }
 
   .modal__title {
-    margin-bottom: 32px;
-    margin-top: 5px;
-    margin-left: 0;
-    width: 106px;
-    height: 20px;
-    font-weight: 500;
     font-size: 20px;
-    line-height: 100%;
   }
 
   .modal__input {
@@ -199,5 +231,16 @@
     padding-left: 32px;
     width: 100%;
     max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 627px) {
+  .modal__close-btn_type_preview {
+    top: -48px;
+    right: 0;
+  }
+
+  .modal__image {
+    max-width: unset;
   }
 }
