@@ -10,13 +10,12 @@
   left: 0;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
   opacity: 0;
   transition: visibility 0s linear 0.5s, opacity 0.5s linear;
   padding: 0 10px;
 }
 
-.modal__close-btn_type_preview {
+.modal_type_preview {
   padding: 0 16px;
 }
 
@@ -27,12 +26,7 @@
 }
 
 .modal__container {
-  background-color: white;
-  padding: 20px;
   border-radius: 10px;
-  overflow-y: auto;
-  transform: scale(0.95);
-  transition: transform 0.3s ease;
   max-width: 730px;
   width: 100%;
   border-radius: 10px;
@@ -40,10 +34,6 @@
   padding: 36px 50px 32px;
   position: relative;
   box-sizing: border-box;
-}
-
-.modal_opened .modal__container {
-  transform: scale(1);
 }
 
 .modal__close-btn {
@@ -84,7 +74,7 @@
   font-size: 32px;
   line-height: 100%;
   letter-spacing: 0%;
-  margin: 32px 0 0;
+  margin: 0;
 }
 
 .modal__form {
@@ -100,7 +90,6 @@
   margin: 8px 0 0;
   max-width: 640px;
   width: 100%;
-  height: 74px;
   border-radius: 8px;
   border: 1px solid #212121;
   gap: 10px;
@@ -170,18 +159,6 @@
 }
 
 @media screen and (max-width: 480px) {
-  .modal {
-    width: 100%;
-    gap: 24px;
-    display: flex;
-    visibility: hidden;
-  }
-
-  .modal_is-opened {
-    width: 100%;
-    visibility: visible;
-  }
-
   .modal__container {
     padding: 22px 12px 12px;
   }
@@ -195,14 +172,9 @@
   }
 
   .modal__input {
-    display: block;
-    gap: 8px;
     padding: 16px 12px;
-    border-radius: 8px;
     border: 1px solid #21212166;
     height: 48px;
-    width: 300px;
-    padding: 16px 12px;
   }
 
   .modal__close-btn {

@@ -121,8 +121,6 @@ function handleEditProfileSubmit(evt) {
 editProfileForm.addEventListener("submit", handleEditProfileSubmit);
 
 newPostBtn.addEventListener("click", function () {
-  imageInput.value = "";
-  captionInput.value = "";
   openModal(newPostmodal);
 });
 
@@ -146,6 +144,7 @@ function handleNewPostSubmit(evt) {
     link: imageInput.value,
   });
 
+  newPostForm.reset();
   cardsList.prepend(cardElement);
 
   closeModal(newPostmodal);

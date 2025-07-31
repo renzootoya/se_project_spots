@@ -67,12 +67,12 @@
 }
 
 .card__like-btn_active {
-  background-image: url(../images/like-btn.svg);
+  background-image: url(../images/like-btn-active.svg);
   opacity: 1;
 }
 
 .card__like-btn_active:hover {
-  background-image: url(../images/like-btn.svg);
+  background-image: url(../images/like-btn-active.svg);
   opacity: 0.4;
 }
 
@@ -87,17 +87,15 @@
   gap: 8px;
   padding-top: 8px;
 }
-
 @media screen and (max-width: 627px) {
   .card__title {
     max-width: 250px;
+
     font-size: 16px;
   }
-
   .card__image {
     height: 280px;
   }
-
   .card__like-btn {
     width: 20px;
     height: 18px;
