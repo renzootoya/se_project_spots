@@ -101,6 +101,16 @@
   color: #2121214d;
 }
 
+.modal__input_type_error {
+  border: 1px solid rgba(255, 0, 0, 0.6);
+}
+
+.modal__error {
+  display: block;
+  color: #ff0000b2;
+  margin-top: 8px;
+}
+
 .modal__label {
   margin: 0 0 32px;
   font-family: "Poppins", Arial, Helvetica, sans-serif;
@@ -109,6 +119,7 @@
   line-height: 110.00000000000001%;
   letter-spacing: 0%;
   color: #212121b2;
+  display: block;
 }
 
 .modal__submit-btn {
