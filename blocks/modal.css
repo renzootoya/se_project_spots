@@ -122,6 +122,10 @@
   display: block;
 }
 
+.modal__button {
+  background: #212121;
+}
+
 .modal__submit-btn {
   font-family: "Poppins", Arial, Helvetica, sans-serif;
   font-weight: 500;
