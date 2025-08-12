@@ -147,6 +147,17 @@
   opacity: 40%;
 }
 
+.modal__button_disabled {
+  background-color: #e0e0e0;
+  color: #b0b0b0;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.modal__button_disabled:hover {
+  cursor: not-allowed;
+}
+
 .modal__image-container {
   position: relative;
 }
