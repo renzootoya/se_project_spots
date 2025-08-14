@@ -106,12 +106,12 @@ function closeModalOnEscape(evt) {
 
 function openModal(modal) {
   modal.classList.add("modal_is-opened");
-  document.addEventListener("keyddown", closeModalOnEscape);
+  document.addEventListener("keydown", closeModalOnEscape);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_is-opened");
-  Document.removeEventListener("keydown", closeModalOnEscape);
+  document.removeEventListener("keydown", closeModalOnEscape);
 }
 
 editProfileBtn.addEventListener("click", function () {
@@ -119,7 +119,8 @@ editProfileBtn.addEventListener("click", function () {
   editProfileDescriptionInput.value = profileDescriptionEl.textContent;
   resetValidation(
     editProfileForm,
-    Array.from(editProfileForm.querySelectorAll(".modal__input"))
+    Array.from(editProfileForm.querySelectorAll(".modal__input")),
+    settings
   );
   openModal(editProfileModal);
 });
@@ -157,7 +158,6 @@ function closeModalOnEscape(evt) {
 }
 
 document.addEventListener("keydown", closeModalOnEscape);
-// Close modal when clicking the overlay (outside content)
 document.querySelectorAll(".modal").forEach((modal) => {
   modal.addEventListener("mousedown", (evt) => {
     if (evt.target === evt.currentTarget) {
@@ -174,7 +174,13 @@ cardImage.classList.add("card__image");
 
 function handleNewPostSubmit(evt) {
   evt.preventDefault();
-  cardSubmitBtn.disabled = true;
+  //cardSubmitBtn.disabled = true;
+
+  resetValidation(
+    newPostForm,
+    Array.from(newPostForm.querySelectorAll(".modal__input")),
+    settings
+  );
 
   const values = {
     name: captionInput.value,
@@ -183,7 +189,7 @@ function handleNewPostSubmit(evt) {
   const cardElement = getCardElement(values);
   cardsList.prepend(cardElement);
   newPostForm.reset();
-  cardSubmitBtn.disabled = true;
+  //cardSubmitBtn.disabled = true;
   closeModal(newPostModal);
 }
 
