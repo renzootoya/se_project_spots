@@ -86,9 +86,7 @@ function getCardElement(data) {
   const deleteModal = document.querySelector("#delete-modal");
   const deleteForm = deleteModal.querySelector(".modal__form");
 
-  deleteForm.addEventListener("submit", (evt) => {
-    evt.preventDefault();
-  });
+  
   let selectedCard;
   let selectedCardId;
 
