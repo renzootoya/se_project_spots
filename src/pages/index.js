@@ -226,22 +226,6 @@ function handleNewPostSubmit(evt) {
   const submitBtn = evt.submitter;
   setButtonText(submitBtn, true, "Save", "Saving...");
 
-  api
-    .getAppInfo()
-    .then(([userInfo, initialCards, newCard]) => {
-      profileNameEl.textContent = userInfo.name;
-      profileDescriptionEl.textContent = userInfo.about;
-      document.querySelector(".profile__avatar").src = userInfo.avatar;
-      initialCards.forEach((item) => {
-        const cardElement = getCardElement(item);
-        cardsList.append(cardElement);
-      });
-    })
-    .catch(console.error)
-    .finally(() => {
-      setButtonText(submitBtn, false, "Save", "Saving...");
-    });
-
   //cardSubmitBtn.disabled = true;
 
   resetValidation(
@@ -254,11 +238,17 @@ function handleNewPostSubmit(evt) {
     name: captionInput.value,
     link: imageInput.value,
   };
-  const cardElement = getCardElement(values);
-  cardsList.prepend(cardElement);
-  newPostForm.reset();
-  //cardSubmitBtn.disabled = true;
-  closeModal(newPostModal);
+
+  api
+    .addCard(values)
+    .then((data) => {
+      const cardElement = getCardElement(values);
+      cardsList.prepend(cardElement);
+      newPostForm.reset();
+      //cardSubmitBtn.disabled = true;
+      closeModal(newPostModal);
+    })
+    .catch(console.error);
 }
 
 // Avatar Form Elements
