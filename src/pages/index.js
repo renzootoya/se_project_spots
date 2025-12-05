@@ -12,20 +12,62 @@ const api = new Api({
   },
 });
 
-api
-  .getAppInfo()
-  .then(([userInfo, initialCards]) => {
-    profileNameEl.textContent = userInfo.name;
-    profileDescriptionEl.textContent = userInfo.about;
-    document.querySelector(".profile__avatar").src = userInfo.avatar;
-    initialCards.forEach((item) => {
-      const cardElement = getCardElement(item);
-      cardsList.append(cardElement);
-    });
-  })
-  .catch(console.error);
+// Global delete modal variables
+const deleteModal = document.querySelector("#delete-modal");
+const deleteForm = document.querySelector("#delete-form");
+const deleteModalCloseBtn = deleteModal.querySelector(".modal__close-btn-delete");
+const deleteModalCancelBtn = deleteModal.querySelector(".modal__cancel-btn");
 
-//
+let selectedCard;
+let selectedCardId;
+
+// Close and cancel handlers for delete modal
+deleteModalCloseBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
+
+deleteModalCancelBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
+
+// Global delete form submit handler
+function handleDeletesubmit(evt) {
+  evt.preventDefault();
+  const submitBtn = deleteForm.querySelector('button[type="submit"]');
+  
+  if (!selectedCardId) {
+    console.error("No card ID selected for deletion!");
+    return;
+  }
+  
+  setButtonTextDelete(submitBtn, true, "Delete", "Deleting...");
+  
+  console.log(`Deleting card with ID: ${selectedCardId}`);
+  
+  api.deleteCard(selectedCardId)
+    .then(() => {
+      console.log("Card deleted successfully");
+      if (selectedCard && selectedCard.remove) {
+        selectedCard.remove();
+      }
+      closeModal(deleteModal);
+      // Reset selection
+      selectedCard = null;
+      selectedCardId = null;
+    })
+    .catch((error) => {
+      console.error("Error deleting card:", error);
+      alert(`Failed to delete card: ${error.message || 'Unknown error'}`);
+    })
+    .finally(() => {
+      setButtonTextDelete(submitBtn, false, "Delete", "Deleting...");
+    });
+}
+
+// Add event listener once
+deleteForm.addEventListener("submit", handleDeletesubmit);
+
+// Rest of your code remains the same...
 const cardSubmitBtn = document.querySelector(".modal__submit-btn");
 const editProfileBtn = document.querySelector(".profile__edit-btn");
 const editProfileModal = document.querySelector("#edit-profile-modal");
@@ -58,6 +100,19 @@ const cardTemplate = document
   .querySelector("#card-template")
   .content.querySelector(".card");
 
+api
+  .getAppInfo()
+  .then(([userInfo, initialCards]) => {
+    profileNameEl.textContent = userInfo.name;
+    profileDescriptionEl.textContent = userInfo.about;
+    document.querySelector(".profile__avatar").src = userInfo.avatar;
+    initialCards.forEach((item) => {
+      const cardElement = getCardElement(item);
+      cardsList.append(cardElement);
+    });
+  })
+  .catch(console.error);
+
 function getCardElement(data) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitleEl = cardElement.querySelector(".card__title");
@@ -83,40 +138,22 @@ function getCardElement(data) {
   });
 
   // Delete card functionality
-  const deleteModal = document.querySelector("#delete-modal");
-  const deleteForm = deleteModal.querySelector(".modal__form");
-
-  
-  let selectedCard;
-  let selectedCardId;
-
-  function handleDeleteCard(evt, cardElement, cardId) {
+  function handleDeleteCard(evt) {
+    evt.preventDefault();
     selectedCard = cardElement;
-    selectedCardId = cardId;
+    selectedCardId = data._id;
+    console.log("Setting selected card ID:", selectedCardId);
+    
+    // Update modal title to show which card is being deleted
+    const modalTitle = deleteModal.querySelector(".modal__title-delete");
+    if (modalTitle) {
+      modalTitle.textContent = `Are you sure you want to delete "${data.name}"?`;
+    }
+    
     openModal(deleteModal);
   }
 
-  cardDeleteBtn.addEventListener("click", (evt) =>
-    handleDeleteCard(evt, cardElement, data._id)
-  );
-
-  function handleDeletesubmit(evt) {
-    evt.preventDefault();
-    const submitBtn = evt.submitter;
-    setButtonTextDelete(submitBtn, true, "Delete", "Deleting...");
-    api
-      .deleteCard(selectedCardId)
-      .then(() => {
-        selectedCard.remove();
-        closeModal(deleteModal);
-      })
-      .catch(console.error)
-      .finally(() => {
-        setButtonTextDelete(submitBtn, false, "Delete", "Deleting...");
-      });
-  }
-
-  deleteForm.addEventListener("submit", handleDeletesubmit);
+  cardDeleteBtn.addEventListener("click", handleDeleteCard);
 
   // Preview image functionality
   cardImageEl.addEventListener("click", () => {
@@ -172,12 +209,17 @@ function handleEditProfileSubmit(evt) {
   evt.preventDefault();
   const submitBtn = evt.submitter;
   setButtonText(submitBtn, true, "Save", "Saving...");
+  
+  const updatedInfo = {
+    name: editProfileNameInput.value,
+    about: editProfileDescriptionInput.value
+  };
+  
   api
-    .getUserInfo()
+    .editProfileInfo(updatedInfo)
     .then((userInfo) => {
       profileNameEl.textContent = userInfo.name;
       profileDescriptionEl.textContent = userInfo.about;
-      document.querySelector(".profile__avatar").src = userInfo.avatar;
       closeModal(editProfileModal);
     })
     .catch(console.error)
@@ -224,8 +266,6 @@ function handleNewPostSubmit(evt) {
   const submitBtn = evt.submitter;
   setButtonText(submitBtn, true, "Save", "Saving...");
 
-  //cardSubmitBtn.disabled = true;
-
   resetValidation(
     newPostForm,
     Array.from(newPostForm.querySelectorAll(".modal__input")),
@@ -240,10 +280,9 @@ function handleNewPostSubmit(evt) {
   api
     .addCard(values)
     .then((data) => {
-      const cardElement = getCardElement(values);
+      const cardElement = getCardElement(data);
       cardsList.prepend(cardElement);
       newPostForm.reset();
-      //cardSubmitBtn.disabled = true;
       closeModal(newPostModal);
     })
     .catch(console.error);
