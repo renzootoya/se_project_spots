@@ -347,4 +347,16 @@
   .modal__image {
     max-width: unset;
   }
+
+  .modal__form {
+    margin:0;
+  }
+}
+
+@media screen and (max-width:  320px) {
+  .modal__delete-btn{
+   padding: 0;
+  }
+
+
 }
