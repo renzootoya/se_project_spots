@@ -44,12 +44,14 @@
           <ul class="cards__list">
             <template id="card-template">
               <li class="card">
-                <button class="card__delete-button" type="button"></button>
-                <img
-                  src="<%=require('./images/DeleteIcon.svg')%>"
-                  alt="delete icon"
-                  class="card__image"
-                />
+                <button class="card__delete-button" type="button">
+                  <img
+                    src="<%=require('./images/DeleteIcon.svg')%>"
+                    alt="delete icon"
+                    class="card__delete-icon"
+                  />
+                </button>
+                <img src="" alt="" class="card__image" />
                 <div class="card__footer">
                   <h2 class="card__title"></h2>
                   <button type="button" class="card__like-btn"></button>

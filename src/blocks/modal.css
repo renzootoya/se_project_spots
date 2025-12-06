@@ -50,34 +50,22 @@
 
 .modal__close-btn {
   position: absolute;
-  margin-top: 32px;
+  top: 20px;
+  right: 20px;
   width: 40px;
   height: 40px;
-  background-image: url(../images/close-btn-default.svg) no-repeat;
-  color: #fff;
-  background-size: 35px 35px;
-  background: none;
+  background: url('../images/closebottomicon.svg') center/contain no-repeat;
   border: none;
-  top: 32px;
-  right: 50px;
-  transition: 0.3s;
-  padding: 0;
-  margin: 0;
   cursor: pointer;
+  transition: opacity 0.3s;
 }
 
  .modal__close-btn_type_preview {
-  background-image: url(../images/close-btn-default.svg);
-  background-repeat: no-repeat;
-  color: #fff;
-  top: 0;
-  right: -52.5px;
+  background: url('../images/closebottomicon.svg') center/contain no-repeat;
 } 
 
 .modal__close-btn:hover {
-  cursor: pointer;
-  opacity: 40%;
-  background-image: url(../images/close-btn-hover.svg);
+  opacity: 0.6;
 }
 
 .modal__close-btn-delete {

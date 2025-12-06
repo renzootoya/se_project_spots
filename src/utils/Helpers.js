@@ -6,8 +6,10 @@ export function setButtonText(
     ) {
         if (isloading) {
             btn.textContent = loadingText;
+            btn.disabled = true;
         } else {
             btn.textContent = defaultText;
+            btn.disabled = false;
         }
     }
 
@@ -19,7 +21,9 @@ export function setButtonText(
         ) {
             if (isloading) {
                 btn.textContent = loadingText;
+                btn.disabled = true;    
             } else {
                 btn.textContent = defaultText;
+                btn.disabled = false;
             }
         } 
