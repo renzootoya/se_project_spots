@@ -48,6 +48,7 @@
   z-index: 2; /* Make sure it's above the image */
   display: block !important; /* Force display */
   opacity: 1 !important; /* Force visibility */
+  background: none;
 }
 
 .card__delete-button:hover {
@@ -57,7 +58,7 @@
 .card__like-btn {
   width: 22px;
   height: 19px;
-  background: url('../images/like-btn.svg') center/contain no-repeat;
+  background: url('../images/heart.svg') center/contain no-repeat;
   border: none;
   cursor: pointer;
   transition: opacity 0.3s;
