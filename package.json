@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/package.json",
   "name": "se_project_spots",
   "version": "0.1.0",
   "description": "- Intro - Figma - Images",
@@ -36,3 +37,5 @@
     "webpack-dev-server": "4.9.3"
   }
 }
+
+  

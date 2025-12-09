@@ -55,7 +55,6 @@ const cardTemplate = document.querySelector("#card-template").content.querySelec
 // State variables
 let selectedCard;
 let selectedCardId;
-let currentUserId = null;
 
 // ========== MODAL FUNCTIONS ==========
 function closeModalOnEscape(evt) {
@@ -117,7 +116,6 @@ api.getUserInfo()
     profileNameEl.textContent = userInfo.name;
     profileDescriptionEl.textContent = userInfo.about;
     profileAvatarEl.src = userInfo.avatar;
-    currentUserId = userInfo._id;
     
     return api.getInitialCards();
   })
@@ -134,13 +132,7 @@ function handleDeletesubmit(evt) {
   evt.preventDefault();
   const submitBtn = deleteForm.querySelector('button[type="submit"]');
   
-  if (!selectedCardId) {
-    console.error("No card ID selected for deletion!");
-    return;
-  }
-  
   setButtonTextDelete(submitBtn, true, "Delete", "Deleting...");
-  
   
   api.deleteCard(selectedCardId)
     .then(() => {
@@ -159,68 +151,54 @@ function handleDeletesubmit(evt) {
 
 deleteForm.addEventListener("submit", handleDeletesubmit);
 
-// ========== CARD CREATION FUNCTION ==========
+// ========== CARD CREATION FUNCTION - FIXED VERSION ==========
 function createCard(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitleEl = cardElement.querySelector(".card__title");
   const cardImageEl = cardElement.querySelector(".card__image");
   const cardDeleteBtn = cardElement.querySelector(".card__delete-button");
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
-
-  // Try to find like count element (if it exists in your template)
-  let cardLikeCount = null;
-  try {
-    cardLikeCount = cardElement.querySelector(".card__like-count");
-  } catch (e) {
-  }
+  const cardLikeCount = cardElement.querySelector(".card__like-count");
   
-  // Set card data
   cardImageEl.src = cardData.link;
   cardImageEl.alt = cardData.name;
   cardTitleEl.textContent = cardData.name;
   
-  // Set like count if element exists
-  if (cardLikeCount && cardData.likes) {
-    cardLikeCount.textContent = cardData.likes.length;
+  let currentLikes = cardData.likes ? cardData.likes.length : 0;
+  
+  if (cardLikeCount) {
+    cardLikeCount.textContent = currentLikes;
   }
   
+  cardLikeBtn.classList.remove("card__like-btn_active");
   
-  // Check if current user has liked this card - FIXED VERSION
-  if (cardData.likes && currentUserId) {
-    const isLikedByCurrentUser = cardData.likes.some(like => {
-      return like._id === currentUserId;
-    });
-    
-    if (isLikedByCurrentUser) {
-      cardLikeBtn.classList.add("card__like-btn_active");
-    }
-  }
-  
-  // Delete button - show only for user's own cards
-  const isOwnCard = cardData.owner && cardData.owner._id === currentUserId;
-  
-  if (!isOwnCard) {
-    cardDeleteBtn.style.display = "none";
-  } else {
-    cardDeleteBtn.style.display = "block";
-  }
-  
-  // Like button event
   cardLikeBtn.addEventListener("click", () => {
     const isLiked = cardLikeBtn.classList.contains("card__like-btn_active");
     
+    // Determine which API call to make
     const likePromise = isLiked 
       ? api.unlikeCard(cardData._id)
       : api.likeCard(cardData._id);
     
+    // Disable button during API call
+    cardLikeBtn.disabled = true;
+    
     likePromise
-      .then((updatedCard) => {
+      .then((response) => {
         cardLikeBtn.classList.toggle("card__like-btn_active");
+        if (isLiked) {
+          currentLikes = Math.max(0, currentLikes - 1);
+        } else {
+          currentLikes += 1;
+        }
         if (cardLikeCount) {
-          cardLikeCount.textContent = updatedCard.likes.length;
+          cardLikeCount.textContent = currentLikes;
         }
       })
       .catch((error) => {
+      })
+      .finally(() => {
+        cardLikeBtn.disabled = false;
       });
   });
   
@@ -308,6 +286,7 @@ function handleNewPostSubmit(evt) {
     link: imageInput.value,
   })
     .then((newCard) => {
+      console.log("New card created from API:", newCard);
       const cardElement = createCard(newCard);
       cardsList.prepend(cardElement);
       newPostForm.reset();
