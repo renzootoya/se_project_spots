@@ -56,6 +56,28 @@ const cardTemplate = document.querySelector("#card-template").content.querySelec
 let selectedCard;
 let selectedCardId;
 
+const likedCardStored = 'likedCards';
+
+function getLikedCards() {
+  const stored = localStorage.getItem(likedCardStored);
+  return stored ? JSON.parse(stored) : {};
+}
+
+function saveLikedCard(cardId, isLiked) {
+  const likedCards = getLikedCards();
+  if (isLiked) {
+    likedCards[cardId] = true;
+  } else {
+    delete likedCards[cardId];
+  }
+  localStorage.setItem(likedCardStored, JSON.stringify(likedCards));
+}
+
+function isCardLiked(cardId) {
+  const likedCards = getLikedCards();
+  return likedCards[cardId] === true;
+}
+
 // ========== MODAL FUNCTIONS ==========
 function closeModalOnEscape(evt) {
   if (evt.key === "Escape") {
@@ -76,7 +98,6 @@ function closeModal(modal) {
   document.removeEventListener("keydown", closeModalOnEscape);
 }
 
-// ========== SET UP ALL CLOSE BUTTONS ==========
 // Edit profile modal close
 editProfileCloseBtn.addEventListener("click", () => {
   closeModal(editProfileModal);
@@ -132,6 +153,10 @@ function handleDeletesubmit(evt) {
   evt.preventDefault();
   const submitBtn = deleteForm.querySelector('button[type="submit"]');
   
+  if (!selectedCardId) {
+    return;
+  }
+  
   setButtonTextDelete(submitBtn, true, "Delete", "Deleting...");
   
   api.deleteCard(selectedCardId)
@@ -139,6 +164,7 @@ function handleDeletesubmit(evt) {
       if (selectedCard && selectedCard.remove) {
         selectedCard.remove();
       }
+      saveLikedCard(selectedCardId, false);
       closeModal(deleteModal);
       selectedCard = null;
       selectedCardId = null;
@@ -151,7 +177,7 @@ function handleDeletesubmit(evt) {
 
 deleteForm.addEventListener("submit", handleDeletesubmit);
 
-// ========== CARD CREATION FUNCTION - FIXED VERSION ==========
+// ========== CARD CREATION FUNCTION ==========
 function createCard(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitleEl = cardElement.querySelector(".card__title");
@@ -164,38 +190,66 @@ function createCard(cardData) {
   cardImageEl.alt = cardData.name;
   cardTitleEl.textContent = cardData.name;
   
-  let currentLikes = cardData.likes ? cardData.likes.length : 0;
+  cardElement.dataset.cardId = cardData._id;
+  
+  const isInitiallyLiked = isCardLiked(cardData._id);
+  
+  let currentLikes = isInitiallyLiked ? 1 : 0;
   
   if (cardLikeCount) {
     cardLikeCount.textContent = currentLikes;
   }
   
-  cardLikeBtn.classList.remove("card__like-btn_active");
+  // Set initial heart state
+  if (isInitiallyLiked) {
+    cardLikeBtn.classList.add("card__like-btn_active");
+  } else {
+    cardLikeBtn.classList.remove("card__like-btn_active");
+  }
   
+  // Like button event
   cardLikeBtn.addEventListener("click", () => {
     const isLiked = cardLikeBtn.classList.contains("card__like-btn_active");
     
-    // Determine which API call to make
+    // Toggle visual state
+    cardLikeBtn.classList.toggle("card__like-btn_active");
+    
+    // Update local count
+    if (isLiked) {
+      currentLikes = 0;
+    } else {
+      currentLikes = 1;
+    }
+    
+    // Update count display
+    if (cardLikeCount) {
+      cardLikeCount.textContent = currentLikes;
+    }
+    
+    // Save to localStorage immediately
+    saveLikedCard(cardData._id, !isLiked);
+    
+    // Make API call
     const likePromise = isLiked 
       ? api.unlikeCard(cardData._id)
       : api.likeCard(cardData._id);
     
-    // Disable button during API call
     cardLikeBtn.disabled = true;
     
     likePromise
-      .then((response) => {
+      .then(() => {})
+      .catch((error) => {
+        // Revert visual state on error
         cardLikeBtn.classList.toggle("card__like-btn_active");
-        if (isLiked) {
-          currentLikes = Math.max(0, currentLikes - 1);
-        } else {
-          currentLikes += 1;
-        }
+        
+        // Revert count
+        currentLikes = isLiked ? 1 : 0;
         if (cardLikeCount) {
           cardLikeCount.textContent = currentLikes;
         }
-      })
-      .catch((error) => {
+        
+        // Revert localStorage
+        saveLikedCard(cardData._id, isLiked);
       })
       .finally(() => {
         cardLikeBtn.disabled = false;
@@ -286,7 +340,6 @@ function handleNewPostSubmit(evt) {
     link: imageInput.value,
   })
     .then((newCard) => {
-      console.log("New card created from API:", newCard);
       const cardElement = createCard(newCard);
       cardsList.prepend(cardElement);
       newPostForm.reset();
