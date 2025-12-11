@@ -56,28 +56,6 @@ const cardTemplate = document.querySelector("#card-template").content.querySelec
 let selectedCard;
 let selectedCardId;
 
-const likedCardStored = 'likedCards';
-
-function getLikedCards() {
-  const stored = localStorage.getItem(likedCardStored);
-  return stored ? JSON.parse(stored) : {};
-}
-
-function saveLikedCard(cardId, isLiked) {
-  const likedCards = getLikedCards();
-  if (isLiked) {
-    likedCards[cardId] = true;
-  } else {
-    delete likedCards[cardId];
-  }
-  localStorage.setItem(likedCardStored, JSON.stringify(likedCards));
-}
-
-function isCardLiked(cardId) {
-  const likedCards = getLikedCards();
-  return likedCards[cardId] === true;
-}
-
 // ========== MODAL FUNCTIONS ==========
 function closeModalOnEscape(evt) {
   if (evt.key === "Escape") {
@@ -98,6 +76,7 @@ function closeModal(modal) {
   document.removeEventListener("keydown", closeModalOnEscape);
 }
 
+// CLOSE MODAL EVENTS
 // Edit profile modal close
 editProfileCloseBtn.addEventListener("click", () => {
   closeModal(editProfileModal);
@@ -164,7 +143,6 @@ function handleDeletesubmit(evt) {
       if (selectedCard && selectedCard.remove) {
         selectedCard.remove();
       }
-      saveLikedCard(selectedCardId, false);
       closeModal(deleteModal);
       selectedCard = null;
       selectedCardId = null;
@@ -186,22 +164,31 @@ function createCard(cardData) {
   const cardLikeBtn = cardElement.querySelector(".card__like-btn");
   const cardLikeCount = cardElement.querySelector(".card__like-count");
   
+  // Set card data
   cardImageEl.src = cardData.link;
   cardImageEl.alt = cardData.name;
   cardTitleEl.textContent = cardData.name;
   
+  // Store card ID on element
   cardElement.dataset.cardId = cardData._id;
   
-  const isInitiallyLiked = isCardLiked(cardData._id);
+  // Check if card is liked 
+  const isLiked = cardData.isLiked === true;
   
-  let currentLikes = isInitiallyLiked ? 1 : 0;
+  let currentLikes = 0;
+  if (cardData.likes && Array.isArray(cardData.likes)) {
+    currentLikes = cardData.likes.length;
+  } else if (isLiked) {
+    currentLikes = 1;
+  }
   
+  // Set like count if element exists
   if (cardLikeCount) {
     cardLikeCount.textContent = currentLikes;
   }
   
-  // Set initial heart state
-  if (isInitiallyLiked) {
+  // Set initial heart state based on API data
+  if (isLiked) {
     cardLikeBtn.classList.add("card__like-btn_active");
   } else {
     cardLikeBtn.classList.remove("card__like-btn_active");
@@ -209,16 +196,16 @@ function createCard(cardData) {
   
   // Like button event
   cardLikeBtn.addEventListener("click", () => {
-    const isLiked = cardLikeBtn.classList.contains("card__like-btn_active");
+    const isCurrentlyLiked = cardLikeBtn.classList.contains("card__like-btn_active");
     
     // Toggle visual state
     cardLikeBtn.classList.toggle("card__like-btn_active");
     
     // Update local count
-    if (isLiked) {
-      currentLikes = 0;
+    if (isCurrentlyLiked) {
+      currentLikes = Math.max(0, currentLikes - 1);
     } else {
-      currentLikes = 1;
+      currentLikes += 1;
     }
     
     // Update count display
@@ -226,30 +213,37 @@ function createCard(cardData) {
       cardLikeCount.textContent = currentLikes;
     }
     
-    // Save to localStorage immediately
-    saveLikedCard(cardData._id, !isLiked);
-    
     // Make API call
-    const likePromise = isLiked 
+    const likePromise = isCurrentlyLiked 
       ? api.unlikeCard(cardData._id)
       : api.likeCard(cardData._id);
     
     cardLikeBtn.disabled = true;
     
     likePromise
-      .then(() => {})
+      .then(() => {
+        // Update local cardData
+        if (isCurrentlyLiked) {
+          cardData.isLiked = false;
+        } else {
+          cardData.isLiked = true;
+        }
+      })
       .catch((error) => {
         // Revert visual state on error
         cardLikeBtn.classList.toggle("card__like-btn_active");
         
         // Revert count
-        currentLikes = isLiked ? 1 : 0;
+        if (isCurrentlyLiked) {
+          currentLikes += 1;
+        } else {
+          currentLikes = Math.max(0, currentLikes - 1);
+        }
+        
+        // Update count display
         if (cardLikeCount) {
           cardLikeCount.textContent = currentLikes;
         }
-        
-        // Revert localStorage
-        saveLikedCard(cardData._id, isLiked);
       })
       .finally(() => {
         cardLikeBtn.disabled = false;
