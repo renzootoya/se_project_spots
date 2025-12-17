@@ -34,45 +34,43 @@
 }
 
 .card__delete-button {
-  background-image: url(../images/Delete\ icon.svg);
-  background-color: transparent;
-  width: 32px;
-  height: 32px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  position: absolute ;
+  top: 20px;
+  right: 20px;
+  width: 18px;
+  height: 19px;
+  color: transparent;
   border: none;
   cursor: pointer;
+  transition: opacity 0.3s ease;
   padding: 0;
+  margin: 0;
+  z-index: 2; /* Make sure it's above the image */
+  display: block !important; /* Force display */
+  opacity: 1 !important; /* Force visibility */
+  background: none;
 }
 
 .card__delete-button:hover {
-  background-image: url(../images/Delete\ icon\ hover.svg);
-  transition: background-image 0.3s ease;
-  opacity: 1;
+  opacity: 0.6;
 }
 
 .card__like-btn {
-  background-image: url(../images/Union.svg);
-  width: 23px;
-  height: 20px;
-  background-color: transparent;
+  width: 22px;
+  height: 19px;
+  background: url('../images/heart.svg') center/contain no-repeat;
   border: none;
   cursor: pointer;
-  padding: 0;
-  opacity: 40%;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  transition: opacity 0.3s;
 }
 
 .card__like-btn_active {
-  background-image: url(../images/like-btn-active.svg);
+  background-image: url("../images/like-btn-active.svg");
   opacity: 1;
 }
 
 .card__like-btn_active:hover {
-  background-image: url(../images/like-btn-active.svg);
+  background-image: url("../images/like-btn-active.svg");
   opacity: 0.4;
 }
 

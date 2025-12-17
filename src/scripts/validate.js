@@ -1,4 +1,4 @@
-const settings = {
+export const settings = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__submit-btn",
@@ -8,14 +8,20 @@ const settings = {
 };
 
 const showInputError = (formEl, inputEl, errorMsg) => {
-  const errorMsgEl = document.querySelector(`#${inputEl.id}-error`);
-  errorMsgEl.textContent = errorMsg;
+  const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
+  if (errorMsgEl) {
+    errorMsgEl.textContent = errorMsg;
+    errorMsgEl.classList.add(settings.errorClass);
+  }
   inputEl.classList.add(settings.inputErrorClass);
 };
 
 const hideInputError = (formEl, inputEl) => {
-  const errorMsgEl = document.querySelector(`#${inputEl.id}-error`);
-  errorMsgEl.textContent = "";
+  const errorMsgEl = formEl.querySelector(`#${inputEl.id}-error`);
+  if (errorMsgEl) {
+    errorMsgEl.textContent = "";
+    errorMsgEl.classList.remove(settings.errorClass);
+  }
   inputEl.classList.remove(settings.inputErrorClass);
 };
 
@@ -33,22 +39,17 @@ const hasInvalidInput = (inputList) => {
   });
 };
 
-// Add console.logs to check functions
 const toggleButtonState = (inputList, buttonEl, settings) => {
   if (hasInvalidInput(inputList)) {
-    disableButton(buttonEl, settings);
+    buttonEl.disabled = true;
+    buttonEl.classList.add(settings.inactiveButtonClass);
   } else {
     buttonEl.disabled = false;
     buttonEl.classList.remove(settings.inactiveButtonClass);
   }
 };
 
-const disableButton = (buttonEl, settings) => {
-  buttonEl.disabled = true;
-  buttonEl.classList.add(settings.inactiveButtonClass);
-};
-
-const resetValidation = (formEl, inputList, settings) => {
+export const resetValidation = (formEl, inputList, settings) => {
   inputList.forEach((inputEl) => {
     hideInputError(formEl, inputEl);
   });
@@ -70,11 +71,9 @@ function setEventListeners(formEl, settings) {
   });
 }
 
-const enableValidation = (settings) => {
+export const enableValidation = (settings) => {
   const formList = document.querySelectorAll(settings.formSelector);
   formList.forEach((formEl) => {
     setEventListeners(formEl, settings);
   });
 };
-
-enableValidation(settings);
